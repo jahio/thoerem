@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_05_030710) do
+ActiveRecord::Schema.define(version: 2020_03_05_033732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 2020_03_05_030710) do
   create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "serial_no"
     t.string "firmware_version"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "telemetries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "device_id", null: false
+    t.float "temp_c", default: 0.0, null: false
+    t.float "humidity_percentage", default: 0.0, null: false
+    t.float "carbon_monoxide", default: 0.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

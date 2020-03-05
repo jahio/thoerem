@@ -1,6 +1,7 @@
 class Device < ApplicationRecord
   validates :serial_no, presence: true
   validates :firmware_version, presence: true
+  has_many :telemetries
 
   #
   # Since each device has a registration date/time, and since Rails already

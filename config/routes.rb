@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   # }
   # 
   post '/t/:device_sn', to: 'telemetry#create'
+  post '/register', to: 'devices#register'
 end

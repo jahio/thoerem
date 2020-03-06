@@ -8,13 +8,14 @@ Rails.application.routes.draw do
   # 
   # {
   #   "telemetry":
-  #   {
-  #     "carbon_monoxide":"0.01",
-  #     "temp_c":"45.2",
-  #     "humidity_percentage":"35.5"
+  #   [
+  #     {
+  #       "carbon_monoxide":"0.01",
+  #       "temp_c":"45.2",
+  #       "humidity_percentage":"35.5"
+  #     }
   #   }
   # }
   # 
   post '/t/:device_sn', to: 'telemetry#create'
-
 end

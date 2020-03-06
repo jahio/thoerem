@@ -2,6 +2,9 @@ class AdminController < ApplicationController
   before_action :authenticate, except: [:index, :login]
 
   def index
+    if authenticate
+      redirect_to :dashboard
+    end
     # Display the login form
   end
 

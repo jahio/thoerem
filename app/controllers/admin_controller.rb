@@ -18,7 +18,7 @@ class AdminController < ApplicationController
   #   system with support for multiple admins, registering them, sending
   #   invite links, all that. But for the very first _prototype_, non-production
   #   iteration of this app, a hard-coded user/pass is just fine. This can
-  #   be extended later as needed. 
+  #   be extended later as needed.
   # 
   def login
     if params[:username] && params[:username] == 'admin'

@@ -1,1 +1,8 @@
 <h1>Dashboard</h1>
+
+<h3>Notifications</h3>
+<ul>
+<% @notifications.each do |n| -%>
+  <li><%= n.message %></li>
+<% end -%>
+</ul>

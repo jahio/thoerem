@@ -6,5 +6,8 @@ class CreateNotifications < ActiveRecord::Migration[6.0]
       t.uuid        :device_id
       t.timestamps
     end
+
+    add_index :notifications, :dismissed
+    add_index :notifications, :device_id
   end
 end

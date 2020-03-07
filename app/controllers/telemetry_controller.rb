@@ -10,7 +10,7 @@ class TelemetryController < ApplicationController
       # Note that since we're dealing with a LOT of objects here potentially,
       # we _could_ use Rails 6's insert_all method. The problem with this
       # approach, however, is that it bypasses ActiveModel/ActiveRecord, not
-      # instantiating objects and therefore not running callbacks on them.
+      # instantiating objects and therefore not running callbacks on save.
       # Without those callbacks, we could have somewhat errant data inserted
       # by a given device/API client. This is why we're not making use of it
       # here, even though it would be more efficient. We want *correct* data,

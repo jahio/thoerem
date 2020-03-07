@@ -9,7 +9,7 @@ class AdminController < ApplicationController
   end
 
   def dashboard
-    
+    @notifications = Notification.where(dismissed: false)
   end
 
   #

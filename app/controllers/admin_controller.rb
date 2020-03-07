@@ -2,10 +2,12 @@ class AdminController < ApplicationController
   before_action :authenticate, except: [:index, :login]
 
   def index
-    if authenticate
-      redirect_to :dashboard
-    end
     # Display the login form
+  end
+
+  def logout
+    cookies[:auth] = nil
+    redirect_to :auth
   end
 
   def dashboard
@@ -19,7 +21,7 @@ class AdminController < ApplicationController
   #   invite links, all that. But for the very first _prototype_, non-production
   #   iteration of this app, a hard-coded user/pass is just fine. This can
   #   be extended later as needed.
-  # 
+  #
   def login
     if params[:username] && params[:username] == 'admin'
       if params[:password] && params[:password] == 'lolpassword'
@@ -39,6 +41,6 @@ class AdminController < ApplicationController
     if cookies[:auth] && cookies[:auth] == 'lolpassword'
       return true
     end
-    return false
+    redirect_to :auth, error: "Login required"
   end
 end

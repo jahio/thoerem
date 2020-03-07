@@ -9,17 +9,20 @@ RSpec.describe TelemetryController, type: :controller do
             {
               "carbon_monoxide":"0.05",
               "temp_c":"22.3",
-              "humidity_percentage":"75.5"
+              "humidity_percentage":"75.5",
+              "health":"needs_service"
             },
             {
               "carbon_monoxide":"0.05",
               "temp_c":"22.3",
-              "humidity_percentage":"75.5"
+              "humidity_percentage":"75.5",
+              "health":"needs_new_filter"
             },
             {
               "carbon_monoxide":"0.05",
               "temp_c":"22.3",
-              "humidity_percentage":"75.5"
+              "humidity_percentage":"75.5",
+              "health":"gas_leak"
             }
           ]
         }
@@ -42,14 +45,15 @@ RSpec.describe TelemetryController, type: :controller do
       expect(@device.telemetries.count).to eq 0
       #
       # Set up some telemetry JSON
-      # 
+      #
       @t_hash = <<~EOF
         {
           "telemetry": [
             {
               "carbon_monoxide":"0.01",
               "temp_c":"45.2",
-              "humidity_percentage":"35.5"
+              "humidity_percentage":"35.5",
+              "health":"gas_leak"
             }
           ]
         }

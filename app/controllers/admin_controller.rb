@@ -5,6 +5,18 @@ class AdminController < ApplicationController
     # Display the login form
   end
 
+  def device_by_sn
+    unless @device = Device.find_by_serial_no(params[:device_sn].upcase)
+      render plain: "Device not found", status: 404
+    end
+    #
+    # Look up telemetry data for the device over the last 24 hours
+    # NOTE: This query should *definitely* be optimized. Each hour returned
+    # will result in 60 rows of data and 60 * 24 = 1,440 rows. JUST FOR A GRAPH.
+    #
+    @tdata = Telemetry.where('created_at > ? AND device_id = ?', 24.hours.ago, @device.id).order(created_at: :asc)
+  end
+
   def logout
     cookies[:auth] = nil
     redirect_to :auth

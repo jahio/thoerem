@@ -3,6 +3,22 @@
 <h3>Notifications</h3>
 <ul>
 <% @notifications.each do |n| -%>
-  <li><%= n.message %></li>
+  <li><%= link_to(n.msg, device_by_sn_path(n.device.serial_no)) %></li>
 <% end -%>
 </ul>
+
+<h3>Lookup Device</h3>
+<%= form_with(url: '/devices', method: "GET", id: 'device_lookup_form') do -%>
+<input type="text" name="device_sn" placeholder="Enter device serial number" id="device_sn">
+<input type="submit" value="search">
+<% end -%>
+
+<script>
+  $(document).ready(function() {
+    $('#device_lookup_form').submit(function(e) {
+      var sn = $('#device_sn').val();
+      window.location.assign('http://localhost:3000/devices/' + sn);
+      return false;
+    })
+  });
+</script>

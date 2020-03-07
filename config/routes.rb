@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get  '/auth',  to: 'admin#index', as: :auth
   get  '/admin/dashboard', to: 'admin#dashboard', as: :dashboard
   get  '/admin/logout', to: 'admin#logout', as: :logout
+  get  '/devices/:device_sn', to: 'admin#device_by_sn', as: :device_by_sn
 
   #
   # POST /t/abc123

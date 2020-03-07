@@ -1,0 +1,30 @@
+<h1>Device <%= @device.serial_no.upcase %></h1>
+
+
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Time', 'Temperature (deg. C)', 'Humidity (%)', 'CO Level (PPM)'],
+      ['14:23',  23.89,      12.5,     9],
+      ['15:23',  25,      13.1,     2],
+      ['16:23',  23.22,       22.7,    33],
+      ['17:23',  24.76,      18.9,     12]
+    ]);
+
+    var options = {
+      title: 'Telemetry Data for <%= @device.serial_no.upcase %>',
+      curveType: 'function',
+      legend: { position: 'top' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+  }
+</script>

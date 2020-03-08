@@ -11,10 +11,9 @@
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
       ['Time', 'Temperature (deg. C)', 'Humidity (%)', 'CO Level (PPM)'],
-      ['14:23',  23.89,      12.5,     9],
-      ['15:23',  25,      13.1,     2],
-      ['16:23',  23.22,       22.7,    33],
-      ['17:23',  24.76,      18.9,     12]
+      <% @telemetries.each do |t| -%>
+        [ '<%= t.recorded_at.strftime("%H:%M:%S") %>', <%= t.temp_c.round(2) %>, <%= t.humidity_percentage.round(2) %>, <%= t.carbon_monoxide.round(2) %>],
+      <% end -%>
     ]);
 
     var options = {

@@ -1,7 +1,7 @@
 <h1>Device <%= @device.serial_no.upcase %></h1>
 
 
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+<div id="curve_chart" style="width: 100%; height: 750px"></div>
 
 
 <script type="text/javascript">
@@ -18,7 +18,7 @@
 
     var options = {
       title: 'Telemetry Data for <%= @device.serial_no.upcase %>',
-      curveType: 'function',
+      curveType: 'none',
       legend: { position: 'top' }
     };
 

@@ -1,7 +1,32 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
-# Examples:
+# db/seeds.rb
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# Herein are contained a myriad of database entries to set up a working
+# DEMO system. This is only for demonstration or testing purposes.
+#
+
+#
+# Create 100 devices
+#
+@devices = []
+100.times do |i|
+  d = Device.new(serial_no: SecureRandom.hex(5), firmware_version: SecureRandom.hex(5))
+  if d.save
+    @devices << d
+  end
+end
+
+#
+# Create telemetry data for each of those devices
+#
+@devices.each do |d|
+  1000.times do |i|
+    d.telemetries << Telemetry.new(
+      temp_c: (rand(1000) * 0.1),
+      humidity_percentage: (rand(1000) * 0.1),
+      carbon_monoxide: (rand(100) * 0.1),
+      health: ["needs_service", "needs_new_filter", "gas_leak"].sample,
+      recorded_at: Time.now - (i * 2).minutes
+    )
+  end
+end

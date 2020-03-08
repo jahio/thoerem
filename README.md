@@ -2,9 +2,10 @@
 
 Zero to testing:
 
+`alias be="bundle exec"`
+
 1. `git clone` this repo;
-1. `bundle exec rake db:create`
-1. `bundle exec rake db:migrate`
+1. `be rake db:create && be rake db:migrate && be rake db:seed && be rake notifications:generate`
 1. `bundle exec rspec` to run tests
 
 Project requirements:

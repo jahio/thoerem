@@ -29,7 +29,8 @@ class TelemetryController < ApplicationController
           temp_c: t[:temp_c],
           humidity_percentage: t[:humidity_percentage],
           carbon_monoxide: t[:carbon_monoxide],
-          health: t[:health]
+          health: t[:health],
+          recorded_at: t[:recorded_at]
         )
       end
       render plain: "Telemetry Recorded", status: 200

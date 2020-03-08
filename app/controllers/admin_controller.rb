@@ -8,13 +8,14 @@ class AdminController < ApplicationController
   def device_by_sn
     unless @device = Device.find_by_serial_no(params[:device_sn].upcase)
       render plain: "Device not found", status: 404
+      return false
     end
     #
     # Look up telemetry data for the device over the last 24 hours
     # NOTE: This query should *definitely* be optimized. Each hour returned
     # will result in 60 rows of data and 60 * 24 = 1,440 rows. JUST FOR A GRAPH.
     #
-    @tdata = Telemetry.where('created_at > ? AND device_id = ?', 24.hours.ago, @device.id).order(created_at: :asc)
+    @telemetries = Telemetry.where('recorded_at > ? AND device_id = ?', 3.hours.ago, @device.id).order(recorded_at: :asc)
   end
 
   def logout

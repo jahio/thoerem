@@ -40,11 +40,13 @@ ActiveRecord::Schema.define(version: 2020_03_07_061441) do
     t.float "humidity_percentage", default: 0.0, null: false
     t.float "carbon_monoxide", default: 0.0, null: false
     t.string "health"
+    t.datetime "recorded_at", default: "2020-03-08 11:03:38", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["carbon_monoxide"], name: "index_telemetries_on_carbon_monoxide"
     t.index ["device_id"], name: "index_telemetries_on_device_id"
     t.index ["health"], name: "index_telemetries_on_health"
+    t.index ["recorded_at"], name: "index_telemetries_on_recorded_at"
   end
 
 end

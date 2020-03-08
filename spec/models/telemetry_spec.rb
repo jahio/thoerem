@@ -8,7 +8,8 @@ RSpec.describe Telemetry, type: :model do
         device:              @device,
         temp_c:              9.3,
         humidity_percentage: 33.5,
-        carbon_monoxide:     0.01
+        carbon_monoxide:     0.01,
+        recorded_at:         Time.now
       )
       @device.save
       @t.save
@@ -32,6 +33,11 @@ RSpec.describe Telemetry, type: :model do
       @t.carbon_monoxide = nil
       expect(@t.valid?).to eq false
       expect(@t.errors.include?(:carbon_monoxide)).to eq true
+    end
+    it "requires recorded_at" do
+      @t.recorded_at = nil
+      expect(@t.valid?).to eq false
+      expect(@t.errors.include?(:recorded_at)).to eq true
     end
   end
 end

@@ -10,19 +10,22 @@ RSpec.describe TelemetryController, type: :controller do
               "carbon_monoxide":"0.05",
               "temp_c":"22.3",
               "humidity_percentage":"75.5",
-              "health":"needs_service"
+              "health":"needs_service",
+              "recorded_at":"#{Time.now}"
             },
             {
               "carbon_monoxide":"0.05",
               "temp_c":"22.3",
               "humidity_percentage":"75.5",
-              "health":"needs_new_filter"
+              "health":"needs_new_filter",
+              "recorded_at":"#{Time.now}"
             },
             {
               "carbon_monoxide":"0.05",
               "temp_c":"22.3",
               "humidity_percentage":"75.5",
-              "health":"gas_leak"
+              "health":"gas_leak",
+              "recorded_at":"#{Time.now}"
             }
           ]
         }
@@ -53,7 +56,8 @@ RSpec.describe TelemetryController, type: :controller do
               "carbon_monoxide":"0.01",
               "temp_c":"45.2",
               "humidity_percentage":"35.5",
-              "health":"gas_leak"
+              "health":"gas_leak",
+              "recorded_at":"#{Time.now}"
             }
           ]
         }

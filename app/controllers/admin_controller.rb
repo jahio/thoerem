@@ -5,6 +5,16 @@ class AdminController < ApplicationController
     # Display the login form
   end
 
+  def dismiss_notification
+    unless @notification = Notification.find(params[:notification_id])
+      render plain: "Notification not found", status: 404
+      return false
+    end
+    @notification.dismissed = true
+    @notification.save
+    redirect_to :dashboard
+  end
+
   def device_by_sn
     unless @device = Device.find_by_serial_no(params[:device_sn].upcase)
       render plain: "Device not found", status: 404

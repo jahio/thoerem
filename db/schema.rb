@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 2020_03_07_061441) do
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "msg"
-    t.boolean "dismissed"
-    t.uuid "device_id"
+    t.string "msg", null: false
+    t.boolean "dismissed", default: false, null: false
+    t.uuid "device_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["device_id"], name: "index_notifications_on_device_id"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_03_07_061441) do
     t.float "humidity_percentage", default: 0.0, null: false
     t.float "carbon_monoxide", default: 0.0, null: false
     t.string "health"
-    t.datetime "recorded_at", default: "2020-03-08 11:03:38", null: false
+    t.datetime "recorded_at", default: "2020-03-08 12:40:53", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["carbon_monoxide"], name: "index_telemetries_on_carbon_monoxide"

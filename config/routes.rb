@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get  '/admin/dashboard', to: 'admin#dashboard', as: :dashboard
   get  '/admin/logout', to: 'admin#logout', as: :logout
   get  '/devices/:device_sn', to: 'admin#device_by_sn', as: :device_by_sn
+  post '/notifications/:notification_id/dismiss', to: 'admin#dismiss_notification', as: :dismiss_notification
 
   #
   # POST /t/abc123

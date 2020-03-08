@@ -3,7 +3,10 @@
 <h3>Notifications</h3>
 <ul>
 <% @notifications.each do |n| -%>
-  <li><%= link_to(n.msg, device_by_sn_path(n.device.serial_no)) %></li>
+  <li>
+    <%= link_to(n.msg, device_by_sn_path(n.device.serial_no)) %>
+    <%= link_to("X", dismiss_notification_path(n.id), method: :post) %>
+  </li>
 <% end -%>
 </ul>
 

@@ -52,7 +52,11 @@
   $(document).ready(function() {
     $('#device_lookup_form').submit(function(e) {
       var sn = $('#device_sn').val();
-      window.location.assign('http://localhost:3000/devices/' + sn);
+      <% if !ENV['URL'].blank? %>
+        window.location.assign('<%= ENV['URL'] %>/devices/' + sn);
+      <% else %>
+        window.location.assign('http://localhost:3000/devices/' + sn);
+      <% end %>
       return false;
     })
   });

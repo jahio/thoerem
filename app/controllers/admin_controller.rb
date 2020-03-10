@@ -16,10 +16,9 @@ class AdminController < ApplicationController
   end
 
   def device_by_sn
-    unless @device = Device.find_by_serial_no(params[:device_sn].upcase)
-      render plain: "Device not found", status: 404
-      return false
-    end
+    @device = Device.find_by_serial_no(params[:device_sn].upcase)
+    @telemetry_entries = Telemetry.where(device: @device).order(recorded_at: :asc).page(params[:page])
+
     #
     # Look up telemetry data for the device over the last 24 hours
     # NOTE: This query should *definitely* be optimized. Each hour returned

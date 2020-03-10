@@ -3,7 +3,32 @@
 
 <div id="curve_chart" style="width: 100%; height: 750px"></div>
 
+<h3>Telemetry</h3>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Temperature (C)</th>
+    <th>Humidity (%)</th>
+    <th>Carbon Monoxide (PPM)</th>
+    <th>Health Status</th>
+  </tr>
+<% @telemetry_entries.each do |t| -%>
+  <tr>
+    <td><%= t.recorded_at.strftime("%Y-%m-%d") %></td>
+    <td><%= t.recorded_at.strftime("%I:%M:%S %p %z") %></td>
+    <td><%= t.temp_c %></td>
+    <td><%= t.humidity_percentage %></td>
+    <td><%= t.carbon_monoxide %>PPM</td>
+    <td><%= t.health %></td>
+  </tr>
+<% end -%>
+</table>
+<%= paginate @telemetry_entries, { controller: 'admin', action: 'device_by_sn' } %>
 
+
+
+<!-- javascript for the graph above -->
 <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);

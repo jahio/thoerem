@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   before_action :authenticate, except: [:index, :login]
+  before_action :verify_params, only: [:device_by_sn]
 
   def index
     # Display the login form
@@ -17,14 +18,25 @@ class AdminController < ApplicationController
 
   def device_by_sn
     @device = Device.find_by_serial_no(params[:device_sn].upcase)
-    @telemetry_entries = Telemetry.where(device: @device).order(recorded_at: :asc).page(params[:page])
+    @telemetry_entries = Telemetry.where(device: @device).order(recorded_at: :desc).page(params[:page])
+
+    #
+    # Here we define a default timeframe for the data points to put on the graph
+    # By default it's 1 day, but if params[:time] is one of day, week, month or year
+    # it'll use that instead.
+    #
+    if params[:time]
+      time = params[:time]
+    else
+      time = "week"
+    end
 
     #
     # Look up telemetry data for the device over the last 24 hours
     # NOTE: This query should *definitely* be optimized. Each hour returned
     # will result in 60 rows of data and 60 * 24 = 1,440 rows. JUST FOR A GRAPH.
     #
-    @telemetries = Telemetry.where('recorded_at > ? AND device_id = ?', 3.hours.ago, @device.id).order(recorded_at: :asc)
+    @telemetries = Telemetry.where('recorded_at > ? AND device_id = ?', 1.send(time.to_sym).ago, @device.id).order(recorded_at: :asc)
   end
 
   def logout
@@ -33,7 +45,8 @@ class AdminController < ApplicationController
   end
 
   def dashboard
-    @notifications = Notification.where(dismissed: false)
+    @notifications = Notification.where(dismissed: false).order(created_at: :desc).page(params[:n_page])
+    @devices = Device.order(created_at: :asc).page(params[:page])
   end
 
   #
@@ -65,4 +78,18 @@ class AdminController < ApplicationController
     end
     redirect_to :auth, error: "Login required"
   end
+
+  def verify_params
+    #
+    # Ensure we only have whitelisted param values for time
+    #
+    if params[:time] && !params[:time].blank?
+      times = ['day', 'week', 'month', 'year']
+      if !times.include?(params[:time])
+        redirect_to :dashboard
+        return false
+      end
+    end
+  end
+
 end

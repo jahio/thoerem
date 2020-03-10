@@ -2,16 +2,59 @@
 <html>
   <head>
     <title>Theorem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
 
   <body>
-    <a href="/admin/logout">Logout</a>
-    <%= yield %>
+    <div class="container">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/logout">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/dashboard#devices">Device List</a>
+        </li>
+        <li class="nav-item">
+          <div class="nav-link">
+          <%= form_with(url: '/devices', method: "GET", id: 'device_lookup_form') do -%>
+            <input type="text" name="device_sn" placeholder="Enter device serial number" id="device_sn">
+            <input type="submit" value="Search">
+          <% end -%>
+          </div>
+        </li>
+      </ul>
+
+
+
+
+
+
+      <%= yield %>
+
+
+
+    </div>
   </body>
+
+  <!-- Javascript for device search -->
+  <script>
+  $(document).ready(function() {
+    $('#device_lookup_form').submit(function(e) {
+      var sn = $('#device_sn').val();
+      window.location.assign('http://localhost:3000/devices/' + sn);
+      return false;
+    })
+  });
+</script>
 </html>

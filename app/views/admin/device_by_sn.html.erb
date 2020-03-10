@@ -3,6 +3,23 @@
 
 <div id="curve_chart" style="width: 100%; height: 750px"></div>
 
+See graph from:
+<ul>
+  <li>
+    <a href="/devices/<%= @device.serial_no %>?time=day">1 Day Ago</a>
+  </li>
+  <li>
+    <a href="/devices/<%= @device.serial_no %>?time=week">1 Week Ago</a>
+  </li>
+  <li>
+    <a href="/devices/<%= @device.serial_no %>?time=month">1 Month Ago</a>
+  </li>
+  <li>
+    <a href="/devices/<%= @device.serial_no %>?time=year">1 Year Ago</a>
+    (Warning, might be slow)
+  </li>
+</ul>
+
 <h3>Telemetry</h3>
 <table>
   <tr>
@@ -17,16 +34,14 @@
   <tr>
     <td><%= t.recorded_at.strftime("%Y-%m-%d") %></td>
     <td><%= t.recorded_at.strftime("%I:%M:%S %p %z") %></td>
-    <td><%= t.temp_c %></td>
-    <td><%= t.humidity_percentage %></td>
-    <td><%= t.carbon_monoxide %>PPM</td>
+    <td><%= t.temp_c.round(2) %></td>
+    <td><%= t.humidity_percentage.round(2) %></td>
+    <td><%= t.carbon_monoxide.round(2) %>PPM</td>
     <td><%= t.health %></td>
   </tr>
 <% end -%>
 </table>
 <%= paginate @telemetry_entries, { controller: 'admin', action: 'device_by_sn' } %>
-
-
 
 <!-- javascript for the graph above -->
 <script type="text/javascript">
@@ -37,7 +52,7 @@
     var data = google.visualization.arrayToDataTable([
       ['Time', 'Temperature (deg. C)', 'Humidity (%)', 'CO Level (PPM)'],
       <% @telemetries.each do |t| -%>
-        [ '<%= t.recorded_at.strftime("%H:%M:%S") %>', <%= t.temp_c.round(2) %>, <%= t.humidity_percentage.round(2) %>, <%= t.carbon_monoxide.round(2) %>],
+        [ '<%= t.recorded_at.strftime("%Y-%m-%d %H:%M:%S %z") %>', <%= t.temp_c.round(2) %>, <%= t.humidity_percentage.round(2) %>, <%= t.carbon_monoxide.round(2) %>],
       <% end -%>
     ]);
 
